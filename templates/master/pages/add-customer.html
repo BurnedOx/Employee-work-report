@@ -1,0 +1,483 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+ 
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Form Validation</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link href="{% static 'assets/vendor/fonts/circular-std/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/libs/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/vendor/fonts/fontawesome/css/fontawesome-all.css' %}">
+    <link rel="stylesheet" href="{% static "assets/vendor/bootstrap-select/css/bootstrap-select.css" %}">
+
+    <script type="text/javascript" src="{% static 'js/codeGenerator.js' %}"></script>
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- main wrapper -->
+    <!-- ============================================================== -->
+    <div class="dashboard-main-wrapper">
+         <!-- ============================================================== -->
+        <!-- navbar -->
+        <!-- ============================================================== -->
+         {% include 'master/base.html' %}
+        <!-- ============================================================== -->
+        <!-- end left sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- wrapper  -->
+        <!-- ============================================================== -->
+        <div class="dashboard-wrapper">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">Add/Edit Customer</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+                    <div class="row">
+                        <!-- ============================================================== -->
+                        <!-- basic form -->
+                        <!-- ============================================================== -->
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <h5 class="card-header">
+                                    <button class="btn btn-primary" onclick="change('personal', 'personal-btn');" id="personal-btn">Personal Details</button>
+                                    <button class="btn" onclick="change('tax', 'tax-btn');" id="tax-btn">Tax Doc Details</button>
+                                    <button class="btn" onclick="change('other', 'other-btn');" id="other-btn">Other Details</button>
+                                    <button class="btn" onclick="change('bank', 'bank-btn');" id="bank-btn">Bank Details</button>
+                                    <button class="btn" onclick="change('e-doc', 'e-doc-btn');" id="e-doc-btn">E-Docket</button>
+                                    <button class="btn" onclick="change('delivery', 'delivery-btn');" id="delivery-btn">Delivery Address</button>
+                                    <button class="btn" onclick="change('contact', 'contact-btn');" id="contact-btn">Contact Person</button>
+                                </h5>
+                                <div class="card-body">
+                                    <form method="post" id="basicform" enctype="multipart/form-data" data-parsley-validate="">{% csrf_token %}
+                                        <div id="personal">
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                <label for="{{ form.code.id_for_label }}">Customer Code<span style="color: red">*</span></label>
+                                                {{ form.code }}<input type="button" onclick="generate({{ codes }})" value="Generate">
+                                                {{ form.code.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.company.id_for_label }}">Company<span style="color: red">*</span></label>
+                                                    {{ form.company }}{{ form.company.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.type.id_for_label }}">Customer Type<span style="color: red">*</span></label><br>
+                                                    {{ form.type }}{{ form.type.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.print_name.id_for_label }}">Print Name<span style="color: red">*</span></label>
+                                                    {{ form.print_name }}{{ form.print_name.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="{{ form.address.id_for_label }}">Address<span style="color: red">*</span></label>
+                                                {{ form.address }}{{ form.address.errors }}
+                                            </div>
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-3">
+                                                    <label for="{{ form.country.id_for_label }}">Country<span style="color: red">*</span></label>
+                                                    {{ form.country }}{{ form.country.errors }}
+                                                </div>
+                                                <div class="col-xl-3">
+                                                    <label for="{{ form.state.id_for_label }}">State<span style="color: red">*</span></label>
+                                                    {{ form.state }}{{ form.state.errors }}
+                                                </div>
+                                                <div class="col-xl-3">
+                                                    <label for="{{ form.city.id_for_label }}">City<span style="color: red">*</span></label>
+                                                    {{ form.city }}{{ form.city.errors }}
+                                                </div>
+                                                <div class="col-xl-3">
+                                                    <label for="{{ form.area.id_for_label }}">Area<span style="color: red">*</span></label>
+                                                    {{ form.area }}{{ form.area.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-4">
+                                                    <label for="{{ form.agent.id_for_label }}">Agent/Executive</label>
+                                                    {{ form.agent }}{{ form.agent.errors }}
+                                                </div>
+                                                <div class="col-xl-4">
+                                                    <label for="{{ form.broker.id_for_label }}">Broker</label>
+                                                    {{ form.broker }}{{ form.broker.errors }}
+                                                </div>
+                                                <div class="col-xl-4">
+                                                    <label for="{{ form.registration_type.id_for_label }}">Registration Type</label>
+                                                    {{ form.registration_type }}{{ form.registration_type.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.phone.id_for_label }}">Phone Number</label>
+                                                    {{ form.phone }}{{ form.phone.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.mobile.id_for_label }}">Mobile Number<span style="color: red">*</span></label>
+                                                    {{ form.mobile }}{{ form.mobile.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.email.id_for_label }}">Email</label>
+                                                    {{ form.email }}{{ form.email.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.website.id_for_label }}">Website</label>
+                                                    {{ form.website }}{{ form.website.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.tax_type.id_for_label }}">Tax Type<span style="color: red">*</span></label>
+                                                    {{ form.tax_type }}{{ form.tax_type.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.party_type.id_for_label }}">Party Type</label>
+                                                    {{ form.party_type }}{{ form.party_type.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="{{ form.vendor_code.id_for_label }}">Vendon Code</label>
+                                                {{ form.vendor_code }}{{ form.vendor_code.errors }}
+                                            </div>
+                                        </div>
+
+                                        <div id="tax" style="display: none">
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.gstin_no.id_for_label }}">GST-IN Number</label>
+                                                    {{ form.gstin_no }}{{ form.gstin_no.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.gstin_doc.id_for_label }}">Add Document</label><br>
+                                                    {{ form.gstin_doc }}{{ form.gstin_doc.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.aadhar_no.id_for_label }}">Aadhar Number</label>
+                                                    {{ form.aadhar_no }}{{ form.aadhar_no.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.aadhar_doc.id_for_label }}">Add Document</label><br>
+                                                    {{ form.aadhar_doc }}{{ form.aadhar_doc.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.pan_no.id_for_label }}">PAN Number</label>
+                                                    {{ form.pan_no }}{{ form.pan_no.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.pan_doc.id_for_label }}">Add Document</label><br>
+                                                    {{ form.pan_doc }}{{ form.pan_doc.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.dl_no.id_for_label }}">DL Number</label>
+                                                    {{ form.dl_no }}{{ form.dl_no.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.dl_doc.id_for_label }}">Add Document</label><br>
+                                                    {{ form.dl_doc }}{{ form.dl_doc.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.other.id_for_label }}">Other</label>
+                                                    {{ form.other }}{{ form.other.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.other_doc.id_for_label }}">Add Document</label><br>
+                                                    {{ form.other_doc }}{{ form.other_doc.errors }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="other" style="display: none">
+                                            <div class="form-row form-group">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.status.id_for_label }}">Customer Status</label>
+                                                    {{ form.status }}{{ form.status.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.investment.id_for_label }}">Investment</label>
+                                                    {{ form.investment }}{{ form.investment.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-xl-6">
+                                                    <div class=" form-group">
+                                                        <label for="{{ form.establishment_year.id_for_label }}">Establishment Year</label><br>
+                                                        {{ form.establishment_year }}{{ form.establishment_year.errors }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="{{ form.credit_days.id_for_label }}">Credit Days</label>
+                                                        {{ form.credit_days }}{{ form.credit_days.errors }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="{{ form.credit_limit.id_for_label }}">Credit Limit</label>
+                                                        {{ form.credit_limit }}{{ form.credit_limit.errors }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-xl-6">
+                                                    <label for="{{ form.certification.id_for_label }}">Certification</label>
+                                                    {{ form.certification }}{{ form.certification.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="{{ form.discount.id_for_label }}">Discount</label><br>
+                                                        {{ form.discount }}%{{ form.discount.errors }}
+                                                    </div>
+                                                    <div class=" form-group">
+                                                        <label for="{{ form.contact_person.id_for_label }}">Contact Person</label><br>
+                                                        {{ form.contact_person }}{{ form.contact_person.errors }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="{{ form.page_no.id_for_label }}">Page Number</label>
+                                                        {{ form.page_no }}{{ form.page_no.errors }}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-xl-6">
+                                                    <label for="{{ form.remark.id_for_label }}">Remarks</label>
+                                                    {{ form.remark }}{{ form.remark.errors }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="bank" style="display: none">
+                                            <div class="form-group form-row">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.bank.id_for_label }}">Bank</label><br>
+                                                    {{ form.bank }}{{ form.bank.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.brunch.id_for_label }}">Brunch</label>
+                                                    {{ form.brunch }}{{ form.brunch.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-row">
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.account_no.id_for_label }}">Account Number</label><br>
+                                                    {{ form.account_no }}{{ form.account_no.errors }}
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <label for="{{ form.isfc.id_for_label }}">ISF Code</label>
+                                                    {{ form.isfc }}{{ form.isfc.errors }}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="{{ form.bank_address.id_for_label }}">Address</label>
+                                                {{ form.bank_address }}{{ form.bank_address.errors }}
+                                            </div>
+                                        </div>
+
+                                        <div id="e-doc" style="display: none">
+                                            <div class="col-xl-6">
+                                                <div class="form-group">
+                                                    <label for="{{ form.document_heading.id_for_label }}">Document Heading</label>
+                                                    {{ form.document_heading }}{{ form.document_heading.errors }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{ form.docket_category.id_for_label }}">Docket Category</label>
+                                                    {{ form.docket_category }}{{ form.docket_category.errors }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{ form.docket_description.id_for_label }}">Docket Description</label>
+                                                    {{ form.docket_description }}{{ form.docket_description.errors }}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{ form.docket_file.id_for_label }}">Atouch File</label>
+                                                    {{ form.docket_file }}{{ form.docket_file.errors }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="delivery" style="display: none">
+                                            <div class="form-group col-xl-6">
+                                                <label for="{{ form.delivery_contact.id_for_label }}">Contact Name</label>
+                                                {{ form.delivery_contact }}{{ form.delivery_contact.errors }}
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label for="{{ form.delivery_location.id_for_label }}">Location</label>
+                                                {{ form.delivery_location }}{{ form.delivery_location.errors }}
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label for="{{ form.delivery_address.id_for_label }}">Address</label>
+                                                {{ form.delivery_address }}{{ form.delivery_address.errors }}
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label for="{{ form.delivery_mobile.id_for_label }}">Mobile Number</label>
+                                                {{ form.delivery_mobile }}{{ form.delivery_mobile.errors }}
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label for="{{ form.delivery_email.id_for_label }}">Email</label>
+                                                {{ form.delivery_email }}{{ form.delivery_email.errors }}
+                                            </div>
+                                        </div>
+
+                                        <div id="contact" style="display: none">
+                                            <div class="form-group col-xl-6">
+                                                <label for="{{ form.person_name.id_for_label }}">Name</label>
+                                                {{ form.person_name }}{{ form.person_name.errors }}
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label for="{{ form.person_department.id_for_label }}">Department</label>
+                                                {{ form.person_department }}{{ form.person_department.errors }}
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label for="{{ form.person_mobile.id_for_label }}">Mobile Number</label>
+                                                {{ form.person_mobile }}{{ form.person_mobile.errors }}
+                                            </div>
+                                            <div class="form-group col-xl-6">
+                                                <label for="{{ form.person_email.id_for_label }}">Email</label>
+                                                {{ form.person_email }}{{ form.person_email.errors }}
+                                            </div>
+                                        </div>
+
+                                        <div class="row form-group">
+                                            <div class="col-sm-12">
+                                                <p class="text-center">
+                                                    <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                                                    <a href="{% url 'master:customer' %}"><input type="button" class="btn btn-space btn-secondary" value="Cancel" /></a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ============================================================== -->
+                        <!-- end basic form -->
+                        <!-- ============================================================== -->
+
+                    </div>
+           
+            </div>
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <div class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            Copyright © 2018 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                            <div class="text-md-right footer-links d-none d-sm-block">
+                                <a href="javascript: void(0);">About</a>
+                                <a href="javascript: void(0);">Support</a>
+                                <a href="javascript: void(0);">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end footer -->
+            <!-- ============================================================== -->
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end main wrapper -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
+    <script src="{% static 'assets/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'assets/vendor/slimscroll/jquery.slimscroll.js' %}"></script>
+    <script src="{% static 'assets/vendor/parsley/parsley.js' %}"></script>
+    <script src="{% static 'assets/libs/js/main-js.js' %}"></script>
+    <script src="{% static "assets/vendor/bootstrap-select/js/bootstrap-select.js" %}"></script>
+    <script>
+    $('#form').parsley();
+    </script>
+    <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+    </script>
+    <script>
+        jQuery(document).ready(function () {
+      jQuery("#mobile_no").keypress(function (e) {
+         var length = jQuery(this).val().length;
+       if(length > 9) {
+            return false;
+       } else if(e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            return false;
+       } else if((length == 0) && (e.which == 48)) {
+            return false;
+       }
+      });
+    });
+    </script>
+    <script>
+        function change(divId, btnId) {
+            let div1 = document.getElementById("personal"),
+                div2 = document.getElementById("tax"),
+                div3 = document.getElementById("other"),
+                div4 = document.getElementById("bank"),
+                div5 = document.getElementById("e-doc"),
+                div6 = document.getElementById("delivery"),
+                div7 = document.getElementById("contact"),
+                divs_arr = [div1, div2, div3, div4, div5, div6, div7];
+
+            let btn1 = document.getElementById("personal-btn"),
+                btn2 = document.getElementById("tax-btn"),
+                btn3 = document.getElementById("other-btn"),
+                btn4 = document.getElementById("bank-btn"),
+                btn5 = document.getElementById("e-doc-btn"),
+                btn6 = document.getElementById("delivery-btn"),
+                btn7 = document.getElementById("contact-btn"),
+                btn_arr = [btn1, btn2, btn3, btn4, btn5, btn6, btn7];
+
+            let required_div = document.getElementById(divId),
+                required_btn = document.getElementById(btnId);
+
+            required_div.style.display = 'block';
+            required_btn.className = "btn btn-primary";
+
+            for(let i=0; i<divs_arr.length; i++) {
+                if(divs_arr[i] !== required_div)
+                    divs_arr[i].style.display = 'none';
+                if(btn_arr[i] !== required_btn)
+                    btn_arr[i].className = "btn";
+            }
+        }
+    </script>
+</body>
+ 
+</html>
